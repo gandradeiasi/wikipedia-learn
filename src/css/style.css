@@ -1,3 +1,4 @@
+button { cursor: pointer; }
 
 #abas { display: flex; justify-content: left; }
 #abas > div { background-color: lightgray; cursor: pointer; padding: .5rem; }
