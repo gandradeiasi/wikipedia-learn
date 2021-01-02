@@ -1,14 +1,17 @@
 const fs = require('fs'),
     os = require('os')
 
-const desktopDir = `${os.homedir()}/Desktop`;
+const pathJson = `${os.homedir()}/Desktop/topicos.json`
 
 module.exports = class TopicosCRUD {
     static salvarJson(json) {
-        fs.writeFile(`${desktopDir}/topicos.json`, JSON.stringify(json), 'utf8', () => { })
+        fs.writeFile(pathJson, JSON.stringify(json), 'utf8', () => { })
     }
     
     static lerJson() {
-        return JSON.parse(fs.readFileSync(`${desktopDir}/topicos.json`));
+        if (fs.existsSync(pathJson)) {
+            return JSON.parse(fs.readFileSync(pathJson));
+        }
+        else return [];
     }
 }
