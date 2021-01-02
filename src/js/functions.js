@@ -1,7 +1,7 @@
 function atualizaCorpo() {
     if (abaAprovados.classList.contains('active'))
         carregaAprovados();
-    else if (abaAprovados.classList.contains('active'))
+    else if (abaPendentes.classList.contains('active'))
         carregaPendentes();
 }
 
