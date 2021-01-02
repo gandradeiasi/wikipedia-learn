@@ -1,7 +1,5 @@
 const express = require('express'),
-    TopicosCRUD = require('./classes/TopicosCRUD'),
-    WikiLinkHelper = require('./classes/WikiLinkHelper');
-
+    TopicosCRUD = require('./classes/TopicosCRUD')
 const app = express()
 const port = 3000
 
@@ -18,7 +16,6 @@ app.post('/inserir-topicos-pendentes', (req, res) => {
 
         if (linkNovo) {
             jsonFinal.push({
-                topico: WikiLinkHelper.extrairTopico(link),
                 link,
                 aprovado: false
             })
@@ -32,12 +29,20 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+app.get('/topico-por-link', (req, res) => {
+    res.send(TopicosCRUD.lerJson().filter(x => x['link'] == req.query.link)[0])
+})
+
 app.get('/topicos-pendentes', (req, res) => {
     res.send(TopicosCRUD.lerJson().filter(x => x['aprovado'] == false))
 })
 
+app.get('/topicos-comentados', (req, res) => {
+    res.send(TopicosCRUD.lerJson().filter(x => x['comentario']))
+})
+
 app.get('/topicos-aprovados', (req, res) => {
-    res.send(TopicosCRUD.lerJson().filter(x => x['aprovado'] == true))
+    res.send(TopicosCRUD.lerJson().filter(x => x['aprovado'] == true && !x['comentario']))
 })
 
 app.delete('/remover-topico', (req, res) => {
@@ -58,7 +63,24 @@ app.post('/aprovar-topico', (req, res) => {
     for (let i = 0; i < json.length; i++) {
         if (json[i]['link'] == link) {
             json[i]['aprovado'] = true
-            console.log(json[i])
+            break
+        }
+    }
+
+    TopicosCRUD.salvarJson(json)
+
+    res.send()
+})
+
+app.post('/comentar-topico', (req, res) => {
+    const comentario = req.body.comentario;
+    const link = req.body.link;
+
+    let json = TopicosCRUD.lerJson();
+
+    for (let i = 0; i < json.length; i++) {
+        if (json[i]['link'] == link) {
+            json[i]['comentario'] = comentario
             break
         }
     }
