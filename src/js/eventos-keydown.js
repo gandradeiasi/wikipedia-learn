@@ -11,4 +11,7 @@ document.addEventListener('keydown', e => {
     else if (e.key == "Escape") {
         cancelarComentario.click();
     }
+    else if (e.key == "=") {
+        document.querySelector('a').click();
+    }
 })
