@@ -30,7 +30,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/topico-por-link', (req, res) => {
-    res.send(TopicosCRUD.lerJson().filter(x => x['link'] == req.query.link)[0])
+    const link = encodeURI(req.query.link);
+    const topico = TopicosCRUD.lerJson().filter(x => x['link'] == link)[0];
+    res.send(topico)
 })
 
 app.get('/topicos-pendentes', (req, res) => {

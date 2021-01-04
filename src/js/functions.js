@@ -26,7 +26,7 @@ function abrirModalComentario(link) {
     salvarComentario.dataset.link = link;
 
     comentario.focus();
-    comentario.setSelectionRange(element.value.length, element.value.length);
+    comentario.setSelectionRange(comentario.value.length, comentario.value.length);
 }
 
 function atualizaClickRemover() {
