@@ -1,5 +1,6 @@
 const express = require('express'),
-    TopicosCRUD = require('./classes/TopicosCRUD')
+    TopicosCRUD = require('./classes/TopicosCRUD'),
+    RevisaoHelper = require("./classes/RevisaoHelper")
 const app = express()
 const port = 3000
 
@@ -40,7 +41,17 @@ app.get('/topicos-pendentes', (req, res) => {
 })
 
 app.get('/topicos-comentados', (req, res) => {
-    res.send(TopicosCRUD.lerJson().filter(x => x['comentario']))
+    res.send(TopicosCRUD.lerJson().filter(x =>
+        x['comentario'] &&
+        !RevisaoHelper.precisaDeRevisao(new Date(x['data_comentario']), x['dias_para_revisao'])
+    ))
+})
+
+app.get('/topicos-revisao', (req, res) => {
+    res.send(TopicosCRUD.lerJson().filter(x =>
+        x['comentario'] &&
+        RevisaoHelper.precisaDeRevisao(new Date(x['data_comentario']), x['dias_para_revisao'])
+    ))
 })
 
 app.get('/topicos-aprovados', (req, res) => {
@@ -83,6 +94,24 @@ app.post('/comentar-topico', (req, res) => {
     for (let i = 0; i < json.length; i++) {
         if (json[i]['link'] == link) {
             json[i]['comentario'] = comentario
+            json[i]['data_comentario'] = new Date().toDateString()
+            json[i]['dias_para_revisao'] = 1
+        }
+    }
+
+    TopicosCRUD.salvarJson(json)
+
+    res.send()
+})
+
+app.post('/revisado-topico', (req, res) => {
+    const link = req.body.link;
+
+    let json = TopicosCRUD.lerJson();
+
+    for (let i = 0; i < json.length; i++) {
+        if (json[i]['link'] == link) {
+            json[i]['dias_para_revisao'] = RevisaoHelper.proximoDiasDeRevisao(json[i]['dias_para_revisao'])
             break
         }
     }

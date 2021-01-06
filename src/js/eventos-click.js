@@ -1,6 +1,7 @@
 abaAprovados.addEventListener('click', carregaAprovados)
 abaPendentes.addEventListener('click', carregaPendentes)
 abaComentados.addEventListener('click', carregaComentados)
+abaRevisao.addEventListener('click', carregaRevisao)
 cancelarComentario.addEventListener('click', () => {
     comentario.value = "";
     modalComentario.classList.remove('active');
