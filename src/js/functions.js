@@ -87,10 +87,7 @@ function atualizaClickAprovar() {
 }
 
 function carregaComentados() {
-    abaAprovados.classList.remove('active');
-    abaPendentes.classList.remove('active');
-    abaRevisao.classList.remove('active');
-    abaComentados.classList.add('active');
+    ativaAba(abaComentados)
 
     let corpoFinal = "";
 
@@ -100,7 +97,9 @@ function carregaComentados() {
             x.forEach(topico => {
                 corpoFinal += `
                     <div class="topico">
-                        <div class="nome-topico">${extrairTopico(topico.link)}</div>
+                        <a class="nome-topico" href="${topico.link}" target="_blank">
+                            ${extrairTopico(topico.link)}
+                        </a>
                         <button class="comentar-topico" data-link="${topico.link}">Comentar</button>
                     </div>
                 `
@@ -112,10 +111,7 @@ function carregaComentados() {
 }
 
 function carregaPendentes() {
-    abaAprovados.classList.remove('active');
-    abaComentados.classList.remove('active');
-    abaRevisao.classList.remove('active');
-    abaPendentes.classList.add('active');
+    ativaAba(abaPendentes)
 
     let corpoFinal = "";
 
@@ -125,7 +121,9 @@ function carregaPendentes() {
             x.forEach(topico => {
                 corpoFinal += `
                     <div class="topico">
-                        <div class="nome-topico">${extrairTopico(topico.link)}</div>
+                        <a class="nome-topico" href="${topico.link}" target="_blank">
+                            ${extrairTopico(topico.link)}
+                        </a>
                         <button class="aprovar-topico" data-link="${topico.link}">Aprovar</button>
                         <button class="remover-topico" data-link="${topico.link}">Remover</button>
                     </div>
@@ -139,10 +137,7 @@ function carregaPendentes() {
 }
 
 function carregaRevisao() {
-    abaAprovados.classList.remove('active');
-    abaComentados.classList.remove('active');
-    abaPendentes.classList.remove('active');
-    abaRevisao.classList.add('active');
+    ativaAba(abaRevisao)
 
     let corpoFinal = "";
 
@@ -152,7 +147,9 @@ function carregaRevisao() {
             x.forEach(topico => {
                 corpoFinal += `
                     <div class="topico">
-                        <div class="nome-topico">${extrairTopico(topico.link)}</div>
+                        <a class="nome-topico" href="${topico.link}" target="_blank">
+                            ${extrairTopico(topico.link)}
+                        </a>
                         <button class="comentar-topico" data-link="${topico.link}">Comentar</button>
                         <button class="revisado-topico" data-link="${topico.link}">Revisado</button>
                     </div>
@@ -166,10 +163,7 @@ function carregaRevisao() {
 }
 
 function carregaAprovados() {
-    abaPendentes.classList.remove('active');
-    abaComentados.classList.remove('active');
-    abaRevisao.classList.remove('active');
-    abaAprovados.classList.add('active');
+    ativaAba(abaAprovados)
 
     let corpoFinal = "";
 
@@ -192,4 +186,11 @@ function carregaAprovados() {
             atualizaClickComentar();
             atualizaClickRemover();
         })
+}
+
+function ativaAba(aba) {
+    document.querySelectorAll('.aba').forEach(x => {
+        if (x == aba) x.classList.add('active')
+        else x.classList.remove('active')
+    })
 }

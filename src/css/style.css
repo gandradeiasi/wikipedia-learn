@@ -1,12 +1,13 @@
 button { cursor: pointer; }
 
 #abas { display: flex; justify-content: left; }
-#abas > div { background-color: lightgray; cursor: pointer; padding: .5rem; }
-#abas > div.active { background-color: darkgray; }
+.aba { background-color: lightgray; cursor: pointer; padding: .5rem; }
+.aba:hover { background-color: darkgray;}
+.aba.active { background-color: gray; }
 
 .topico { display: flex; border-bottom: 1px solid gray; padding: .5rem 0; }
 .topico:hover { background-color: lightgray; }
-.topico .nome-topico { width: 50%; }
+.topico .nome-topico { width: 50%; color: black; text-decoration: none; }
 .topico button { cursor: pointer; margin-right: 1rem; }
 
 #corpo { padding-top: 1rem; }
