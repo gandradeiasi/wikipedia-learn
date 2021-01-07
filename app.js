@@ -24,6 +24,8 @@ app.post('/inserir-topicos-pendentes', (req, res) => {
     });
 
     TopicosCRUD.salvarJson(jsonFinal)
+
+    res.send()
 })
 
 app.post('/inserir-topicos-aprovados', (req, res) => {
@@ -42,6 +44,8 @@ app.post('/inserir-topicos-aprovados', (req, res) => {
     });
 
     TopicosCRUD.salvarJson(jsonFinal)
+
+    res.send()
 })
 
 app.get('/', (req, res) => {

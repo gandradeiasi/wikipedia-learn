@@ -11,7 +11,7 @@ setTimeout(() => {
                 && !link.href.includes('(desamb')
                 && !link.href.includes('#')
                 && !link.href.includes('icheiro:')
-                && !link.href.includes(/wiki\/S%C3%A9culo_/)
+                && !link.href.includes('/wiki/S%C3%A9culo_')
                 && !link.href.match(/\w:\w/)
                 && !link.href.match(/wiki\/[0-9]+$/)
         ).map(x => x.href);
