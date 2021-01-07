@@ -10,18 +10,25 @@ setTimeout(() => {
                 && !link.href.includes('commons.')
                 && !link.href.includes('(desamb')
                 && !link.href.includes('#')
+                && !link.href.includes(/wiki\/S%C3%A9culo_/)
                 && !link.href.match(/\w:\w/)
                 && !link.href.match(/wiki\/[0-9]+$/)
         ).map(x => x.href);
-    
-    linksColetados.push(window.location.href);
 
-    fetch('http://localhost:3000/inserir-topicos-pendentes',
+    fetch('http://localhost:3000/inserir-topicos-aprovados',
         {
             method: "post",
-            body: JSON.stringify({ linksColetados }),
+            body: JSON.stringify({ links: [window.location.href] }),
             headers: { "Content-Type": "application/json" }
         }
-    )
+    ).then(() => {
+        fetch('http://localhost:3000/inserir-topicos-pendentes',
+            {
+                method: "post",
+                body: JSON.stringify({ linksColetados }),
+                headers: { "Content-Type": "application/json" }
+            }
+        )
+    })
 }, 1000)
 

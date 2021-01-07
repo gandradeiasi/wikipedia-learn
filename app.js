@@ -26,6 +26,24 @@ app.post('/inserir-topicos-pendentes', (req, res) => {
     TopicosCRUD.salvarJson(jsonFinal)
 })
 
+app.post('/inserir-topicos-aprovados', (req, res) => {
+    const links = req.body.links
+    let jsonFinal = TopicosCRUD.lerJson()
+
+    links.forEach(link => {
+        const linkNovo = jsonFinal.filter(x => x['link'] == link).length == 0;
+
+        if (linkNovo) {
+            jsonFinal.push({
+                link,
+                aprovado: true
+            })
+        }
+    });
+
+    TopicosCRUD.salvarJson(jsonFinal)
+})
+
 app.get('/', (req, res) => {
     res.render('index')
 })
