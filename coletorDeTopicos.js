@@ -13,6 +13,8 @@ setTimeout(() => {
                 && !link.href.match(/\w:\w/)
                 && !link.href.match(/wiki\/[0-9]+$/)
         ).map(x => x.href);
+    
+    linksColetados.push(window.location.href);
 
     fetch('http://localhost:3000/inserir-topicos-pendentes',
         {
