@@ -14,6 +14,7 @@ function extrairTopico(link) {
             .replace(/_/g, " ")
     )
         .replace(/%26/g, '&')
+        .replace(/%2B/g, '+')
 
     return topicoFormatado
 }
