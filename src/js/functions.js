@@ -31,10 +31,10 @@ function abrirModalComentario(link) {
         })
 
     cancelarComentario.dataset.link = link;
-   
+
     salvarComentario.dataset.link = link;
     salvarComentario.style.display = "none";
-   
+
     comentario.focus();
     comentario.setSelectionRange(comentario.value.length, comentario.value.length);
 }
@@ -127,7 +127,8 @@ function carregaPendentes() {
         .then(x => x.json())
         .then(x => {
             x.forEach(topico => {
-                corpoFinal += `
+                if (topico) {
+                    corpoFinal += `
                     <div class="topico">
                         <a class="nome-topico" href="${topico.link}" target="_blank">
                             ${extrairTopico(topico.link)}
@@ -136,6 +137,7 @@ function carregaPendentes() {
                         <button class="remover-topico" data-link="${topico.link}">Remover</button>
                     </div>
                 `
+                }
             });
 
             corpo.innerHTML = corpoFinal;
