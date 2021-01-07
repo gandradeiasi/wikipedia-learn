@@ -24,11 +24,17 @@ function abrirModalComentario(link) {
 
     fetch(ambiente + '/topico-por-link?link=' + link)
         .then(x => x.json())
-        .then(x => comentario.value = x.comentario ? x.comentario : '')
+        .then(x => {
+            const comentarioString = x.comentario ? x.comentario : '';
+            comentario.value = comentarioString;
+            comentario.dataset.comentarioOriginal = comentarioString;
+        })
 
     cancelarComentario.dataset.link = link;
+   
     salvarComentario.dataset.link = link;
-
+    salvarComentario.style.display = "none";
+   
     comentario.focus();
     comentario.setSelectionRange(comentario.value.length, comentario.value.length);
 }
