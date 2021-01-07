@@ -123,7 +123,7 @@ function carregaPendentes() {
 
     let corpoFinal = "";
 
-    fetch(ambiente + '/topicos-pendentes')
+    fetch(ambiente + '/topicos-pendentes?quantia=1')
         .then(x => x.json())
         .then(x => {
             x.forEach(topico => {

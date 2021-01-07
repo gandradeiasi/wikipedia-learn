@@ -31,13 +31,26 @@ app.get('/', (req, res) => {
 })
 
 app.get('/topico-por-link', (req, res) => {
-    const link = encodeURI(req.query.link);
-    const topico = TopicosCRUD.lerJson().filter(x => x['link'] == link)[0];
+    const link = encodeURI(req.query.link)
+    const topico = TopicosCRUD.lerJson().filter(x => x['link'] == link)[0]
     res.send(topico)
 })
 
 app.get('/topicos-pendentes', (req, res) => {
-    res.send(TopicosCRUD.lerJson().filter(x => x['aprovado'] == false))
+    const quantia = req.query.quantia
+    const json = TopicosCRUD.lerJson().filter(x => x['aprovado'] == false)
+    if (quantia) {
+        let retorno = []
+        for (let i = 0; i < quantia; i++) {
+            if (i <= json.length)
+                retorno.push(json[i])
+            else
+                break
+        }
+        res.send(retorno)
+    }
+    else
+        res.send(TopicosCRUD.lerJson().filter(x => x['aprovado'] == false))
 })
 
 app.get('/topicos-comentados', (req, res) => {
