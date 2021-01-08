@@ -147,6 +147,7 @@ app.post('/revisado-topico', (req, res) => {
     for (let i = 0; i < json.length; i++) {
         if (json[i]['link'] == link) {
             json[i]['dias_para_revisao'] = RevisaoHelper.proximoDiasDeRevisao(json[i]['dias_para_revisao'])
+            json[i]['data_comentario'] = new Date().toDateString()
             break
         }
     }
