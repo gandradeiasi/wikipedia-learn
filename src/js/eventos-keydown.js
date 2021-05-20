@@ -1,19 +1,15 @@
 document.addEventListener('keydown', e => {
     if (!modalComentario.classList.contains('active')) {
-        if (e.key == "-") {
+        keydown("-", () => botoesRemover[0].click());
+        keydown("+", () => botoesAprovar[0].click());
+        keydown("*", () => botoesComentar[0].click());
+        keydown("Escape", () => cancelarComentario[0].click());
+        keydown("=", () => document.querySelector('a').click());
+        keydown("/", () => {
             botoesRemover[0].click();
-        }
-        else if (e.key == "+") {
-            botoesAprovar[0].click();
-        }
-        else if (e.key == "*") {
-            botoesComentar[0].click();
-        }
-        else if (e.key == "Escape") {
-            cancelarComentario.click();
-        }
-        else if (e.key == "=") {
-            document.querySelector('a').click();
-        }
+            setTimeout(() => document.querySelector('a').click(), 200);
+        });
+        keydown('1', () => abaAprovados.click());
+        keydown('2', () => abaPendentes.click());
     }
 })

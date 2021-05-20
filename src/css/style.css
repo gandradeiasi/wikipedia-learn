@@ -1,3 +1,5 @@
+* { font-family: system-ui; }
+
 button { cursor: pointer; }
 
 #abas { display: flex; justify-content: left; }
@@ -5,7 +7,8 @@ button { cursor: pointer; }
 .aba:hover { background-color: darkgray;}
 .aba.active { background-color: gray; }
 
-.topico { display: flex; border-bottom: 1px solid gray; padding: .5rem 0; }
+.topico { display: flex; border-bottom: 1px solid gray; padding: .5rem; }
+.topico.bloqueado { background-color: rgb(243, 243, 243); }
 .topico:hover { background-color: lightgray; }
 .topico .nome-topico { width: 50%; color: black; text-decoration: none; }
 .topico button { cursor: pointer; margin-right: 1rem; }

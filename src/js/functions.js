@@ -7,6 +7,29 @@ function atualizaCorpo() {
         carregaRevisao();
 }
 
+function keydown(tecla, acao) {
+    document.addEventListener('keydown', e => {
+        if (e.key == tecla && podeAgir) {
+            acao();
+            configuraDelayAcao();
+        }
+    })
+}
+
+function configuraDelayAcao() {
+    podeAgir = false;
+
+    setTimeout(() => {
+        const topico = document.querySelector(seletorTopico);
+        topico?.classList.add('bloqueado');
+        setTimeout(() => {
+            podeAgir = true
+            topico?.classList.remove('bloqueado');
+        }, delayEntreAcoes);
+    }, delayAtualizacao)
+
+}
+
 function extrairTopico(link) {
     const topicoNaoFormatado = link.match(/wiki\/(.*)$/)[1]
     const topicoFormatado = decodeURI(
@@ -51,6 +74,8 @@ function atualizaClickRemover() {
             headers
         })
             .then(atualizaCorpo)
+
+        console.log(link);
     }))
 }
 

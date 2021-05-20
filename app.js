@@ -19,10 +19,7 @@ app.post('/inserir-topicos-pendentes', (req, res) => {
         const linkNovo = !jsonFinal.find(topico => topico.link == link);
 
         if (linkNovo) {
-            jsonFinal.push({
-                link,
-                aprovado: false
-            })
+            jsonFinal.push({ link })
         }
     });
 
@@ -63,7 +60,7 @@ app.get('/topico-por-link', (req, res) => {
 
 app.get('/topicos-pendentes', (req, res) => {
     const quantia = req.query.quantia
-    const json = TopicosCRUD.lerJson().filter(x => x['aprovado'] == false)
+    const json = TopicosCRUD.lerJson().filter(x => !x['removido'] && !x['aprovado'])
     if (quantia) {
         let retorno = []
         for (let i = 0; i < quantia; i++) {
@@ -75,7 +72,7 @@ app.get('/topicos-pendentes', (req, res) => {
         res.send(retorno)
     }
     else
-        res.send(TopicosCRUD.lerJson().filter(x => x['aprovado'] == false))
+        res.send(TopicosCRUD.lerJson().filter(x => !x['removido'] && !x['aprovado']))
 })
 
 app.get('/topicos-comentados', (req, res) => {
@@ -93,15 +90,22 @@ app.get('/topicos-revisao', (req, res) => {
 })
 
 app.get('/topicos-aprovados', (req, res) => {
-    res.send(TopicosCRUD.lerJson().filter(x => x['aprovado'] == true && !x['comentario']))
+    res.send(TopicosCRUD.lerJson().filter(x => !x['removido'] && x['aprovado'] == true && !x['comentario']))
 })
 
 app.delete('/remover-topico', (req, res) => {
     const link = req.body.link;
 
-    const jsonAnterior = TopicosCRUD.lerJson();
+    let json = TopicosCRUD.lerJson();
 
-    TopicosCRUD.salvarJson(jsonAnterior.filter(x => x['link'] != link))
+    for (let i = 0; i < json.length; i++) {
+        if (json[i]['link'] == link) {
+            json[i]['removido'] = true
+            break
+        }
+    }
+
+    TopicosCRUD.salvarJson(json)
 
     res.send()
 })
