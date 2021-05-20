@@ -3,6 +3,9 @@ const express = require('express'),
     RevisaoHelper = require("./classes/RevisaoHelper")
 const app = express()
 const port = 3000
+const cors = require('cors')
+
+app.use(cors());
 
 app.set('view engine', 'pug')
 app.use(require('body-parser').json())
@@ -13,7 +16,7 @@ app.post('/inserir-topicos-pendentes', (req, res) => {
     let jsonFinal = TopicosCRUD.lerJson()
 
     linksColetados.forEach(link => {
-        const linkNovo = jsonFinal.filter(x => x['link'] == link).length == 0;
+        const linkNovo = !jsonFinal.find(topico => topico.link == link);
 
         if (linkNovo) {
             jsonFinal.push({
