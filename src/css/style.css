@@ -7,7 +7,7 @@ button { cursor: pointer; }
 .aba:hover { background-color: darkgray;}
 .aba.active { background-color: gray; }
 
-.topico { display: flex; border-bottom: 1px solid gray; padding: .5rem; }
+.topico { display: flex; border-bottom: 1px solid gray; padding: .5rem  400px; }
 .topico.bloqueado { background-color: rgb(243, 243, 243); }
 .topico:hover { background-color: lightgray; }
 .topico .nome-topico { width: 50%; color: black; text-decoration: none; }

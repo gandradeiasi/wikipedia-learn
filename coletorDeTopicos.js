@@ -1,5 +1,7 @@
 var nao_eh_home = !window.location.pathname.match(/\/wiki\/Wikip%C3%A9dia:P%C3%A1gina_principal/);
 if (nao_eh_home) {
+	window.location.hash = "#firstHeading";
+	
     setTimeout(() => {
         document.querySelectorAll('table')
             .forEach(x => x.remove());

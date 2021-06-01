@@ -9,8 +9,8 @@ const cancelarComentario = document.querySelector('#cancelar-comentario');
 const salvarComentario = document.querySelector('#salvar-comentario');
 const ambiente = 'http://localhost:3000';
 const headers = { "Content-Type": "application/json" }
-const delayEntreAcoes = 100;
-const delayAtualizacao = 25;
+const delayEntreAcoes = 200;
+const delayAtualizacao = 50;
 const seletorTopico = ".topico";
 
 let podeAgir = true;
