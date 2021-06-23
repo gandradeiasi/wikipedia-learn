@@ -6,4 +6,5 @@ comentario.addEventListener('keyup', () => {
         salvarComentario.style.display = "none";
     else
         salvarComentario.style.display = "block";
-})
+});
+

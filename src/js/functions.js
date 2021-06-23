@@ -62,6 +62,12 @@ function abrirModalComentario(link) {
     comentario.setSelectionRange(comentario.value.length, comentario.value.length);
 }
 
+function removeAprovadoEAbreProximo() {
+    botoesRemover[0].click();
+    setTimeout(() => document.querySelector('a').click(), 300);
+    setTimeout(() => abaPendentes.click(), 6000);
+}
+
 function atualizaClickRemover() {
     botoesRemover = document.querySelectorAll('.remover-topico');
 
@@ -150,8 +156,14 @@ function carregaPendentes() {
 
     fetch(ambiente + '/topicos-pendentes?quantia=1')
         .then(x => x.json())
-        .then(x => {
-            x.forEach(topico => {
+        .then(topicosPendentes => {
+            var sem_topicos_pendentes = topicosPendentes.length == 1 && !topicosPendentes[0];
+            if (sem_topicos_pendentes) {
+                abaAprovados.click();
+                setTimeout(removeAprovadoEAbreProximo, 500);
+            }
+
+            topicosPendentes.forEach(topico => {
                 if (topico) {
                     corpoFinal += `
                     <div class="topico">

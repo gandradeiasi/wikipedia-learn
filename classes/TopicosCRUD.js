@@ -1,7 +1,7 @@
 const fs = require('fs'),
     os = require('os')
 
-const pathJson = `${os.homedir()}/Desktop/topicos.json`
+const pathJson = `./topicos.json`
 
 module.exports = class TopicosCRUD {
     static salvarJson(json) {

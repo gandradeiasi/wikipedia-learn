@@ -1,5 +1,7 @@
 atualizaCorpo();
 
+abaPendentes.click();
+
 
 
 
