@@ -1,32 +1,25 @@
-var nao_eh_home = !window.location.pathname.match(/\/wiki\/Wikip%C3%A9dia:P%C3%A1gina_principal/);
-if (nao_eh_home) {
-	window.location.hash = "#firstHeading";
-	
-    setTimeout(() => {
-        document.querySelectorAll('table')
-            .forEach(x => x.remove());
+document.querySelectorAll('.glide__slides:not(.glide__slide--clone)')
+    .forEach(function (slide, i) {
+        slide.addEventListener('change', function () {
+            var trueView = slide.classList.contains('glide__slide--active')
+                && checkVisible(slide)
+                && !slide.dataset.jaVizualizado;
 
-        var corpoDoArtigo = document.querySelector("#mw-content-text");
-        var linksColetados = [...corpoDoArtigo.querySelectorAll('a')]
-            .filter(link => link.children.length == 0)
-            .filter(
-                link => link.href.includes('/wiki/')
-                    && !link.href.includes('commons.')
-                    && !link.href.includes('(desamb')
-                    && !link.href.includes('#')
-                    && !link.href.includes('icheiro:')
-                    && !link.href.includes('/wiki/S%C3%A9culo_')
-                    && !link.href.match(/\w:\w/)
-                    && !link.href.match(/wiki\/[0-9]+$/)
-            ).map(x => x.href);
-
-
-        fetch('http://localhost:3000/inserir-topicos-pendentes',
-            {
-                method: "post",
-                body: JSON.stringify({ linksColetados }),
-                headers: { "Content-Type": "application/json" }
+            if (trueView) {
+                var slideLink = slide.querySelector('a').href;
+                dataLayer.push({
+                    event: 'gaSendEvent',
+                    gaEventCategory: '',
+                    gaEventCategory: 'True View',
+                    gaEventLabel: 'Banner ' + (i + 1) + " | Link: " + slideLink
+                });
+                slide.dataset.jaVizualizado = true;
             }
-        )
-    }, 1000)
+        })
+    })
+
+function checkVisible(elm) {
+    var rect = elm.getBoundingClientRect();
+    var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+    return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
 }
