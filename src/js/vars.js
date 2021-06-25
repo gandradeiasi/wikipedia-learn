@@ -11,6 +11,7 @@ const ambiente = 'http://localhost:3000';
 const headers = { "Content-Type": "application/json" }
 const delayEntreAcoes = 200;
 const delayAtualizacao = 50;
+const delayCarregamentoDoArtigo = 4000;
 const seletorTopico = ".topico";
 
 let podeAgir = true;

@@ -62,10 +62,12 @@ function abrirModalComentario(link) {
     comentario.setSelectionRange(comentario.value.length, comentario.value.length);
 }
 
-function removeAprovadoEAbreProximo() {
-    botoesRemover[0].click();
-    setTimeout(() => document.querySelector('a').click(), 300);
-    setTimeout(() => abaPendentes.click(), 6000);
+function abreERemoveAprovado() {
+    if (botoesRemover.length > 0) {
+        document.querySelector('a').click()
+        botoesRemover[0].click();
+        setTimeout(() => abaPendentes.click(), delayCarregamentoDoArtigo);
+    }
 }
 
 function atualizaClickRemover() {
@@ -160,7 +162,7 @@ function carregaPendentes() {
             var sem_topicos_pendentes = topicosPendentes.length == 1 && !topicosPendentes[0];
             if (sem_topicos_pendentes) {
                 abaAprovados.click();
-                setTimeout(removeAprovadoEAbreProximo, 500);
+                setTimeout(abreERemoveAprovado, 500);
             }
 
             topicosPendentes.forEach(topico => {
@@ -216,8 +218,14 @@ function carregaAprovados() {
 
     fetch(ambiente + '/topicos-aprovados')
         .then(x => x.json())
-        .then(x => {
-            x.forEach(topico => {
+        .then(topicosAprovados => {
+            var sem_topicos_aprovados = topicosAprovados.length == 0;
+            if (sem_topicos_aprovados) {
+                window.open('https://pt.wikipedia.org/wiki/Especial:Aleat%C3%B3ria');
+                setTimeout(() => abaPendentes.click(), delayCarregamentoDoArtigo);
+            }
+
+            topicosAprovados.forEach(topico => {
                 corpoFinal += `
                     <div class="topico">
                         <a class="nome-topico" href="${topico.link}" target="_blank">
